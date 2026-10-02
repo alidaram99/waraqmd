@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Waraq — Markdown reader &amp; editor</title>
+<meta name="description" content="Open, edit and save Markdown files offline. Mermaid, math, tables, task lists, automatic Arabic/English direction.">
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="icon" href="./icons/icon-192.png">
+<link rel="apple-touch-icon" href="./icons/icon-192.png">
+<meta name="theme-color" content="#2563eb">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Waraq">
+<link rel="stylesheet" href="./assets/app.css">
+<link rel="stylesheet" href="./assets/katex.min.css">
+</head>
+<body>
+<div id="waraq-drop-overlay" class="waraq-drop-overlay hidden" data-i18n="dropHint">Drop a Markdown file here, or paste text</div>
+
+<header id="waraq-toolbar" class="waraq-toolbar">
+  <button id="waraq-btn-new" data-i18n="newFile">New</button>
+  <button id="waraq-btn-open" data-i18n="openFile">Open file</button>
+  <button id="waraq-btn-save" data-i18n="save">Save</button>
+  <button id="waraq-btn-save-as" data-i18n="saveAs">Save as…</button>
+  <span style="border-left:1px solid var(--border);height:1.4em;margin:0 .2em"></span>
+  <button id="waraq-btn-mode-edit" data-i18n="edit" aria-pressed="false">Edit</button>
+  <button id="waraq-btn-mode-split" data-i18n="split" aria-pressed="true">Split</button>
+  <button id="waraq-btn-mode-preview" data-i18n="preview" aria-pressed="false">Preview</button>
+  <button id="waraq-btn-toc" data-i18n="tableOfContents">Contents</button>
+  <span class="waraq-spacer"></span>
+  <span id="waraq-filename" class="waraq-filename"></span>
+  <span id="waraq-status" class="waraq-status"></span>
+  <button id="waraq-btn-print" data-i18n="print" data-i18n-title="print" title="Print / Export PDF">🖨️</button>
+  <button id="waraq-btn-export-html" data-i18n-title="exportHtml" title="Export standalone HTML">⇩ HTML</button>
+  <button id="waraq-btn-theme" data-i18n-title="theme" title="Theme">🖥️</button>
+  <button id="waraq-btn-lang" data-i18n-title="language" title="Language">AR</button>
+  <button id="waraq-btn-install" class="hidden">⬇ Install</button>
+</header>
+
+<main class="waraq-main">
+  <nav id="waraq-sidebar" class="waraq-sidebar hidden" aria-label="Table of contents">
+    <strong data-i18n="tableOfContents">Contents</strong>
+    <div id="waraq-toc"></div>
+    <hr>
+    <strong data-i18n="recentFiles">Recent files</strong>
+    <ul id="waraq-recent-list" class="waraq-recent"></ul>
+  </nav>
+
+  <div id="waraq-panes" class="waraq-panes split">
+    <div id="waraq-editor-pane" class="waraq-pane">
+      <textarea id="waraq-editor" spellcheck="false" placeholder="# Start writing…"></textarea>
+    </div>
+    <div id="waraq-preview-pane" class="waraq-pane waraq-preview-pane">
+      <article id="waraq-preview" class="waraq-preview" dir="auto"></article>
+    </div>
+  </div>
+</main>
+
+<div id="waraq-welcome" class="waraq-welcome hidden">
+  <p data-i18n="dropHint">Drop a Markdown file here, or paste text</p>
+  <button id="waraq-welcome-open" data-i18n="openFile" onclick="document.getElementById('waraq-btn-open').click()">Open file</button>
+</div>
+
+<input type="file" id="waraq-file-input" class="hidden" style="display:none">
+
+<script type="module" src="./assets/app.js"></script>
+</body>
+</html>

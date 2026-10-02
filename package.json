@@ -1,0 +1,49 @@
+{
+  "name": "waraqmd",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Waraq — an offline-first, installable Markdown reader and editor PWA for agent output and everyday notes, with automatic per-paragraph Arabic/English (RTL/LTR) text direction, Mermaid, KaTeX math, and GitHub-flavored tables and task lists.",
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "test": "node --test test/*.test.mjs",
+    "icons": "python scripts/make-icons.py"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alidaram99/waraqmd.git"
+  },
+  "homepage": "https://alidaram99.github.io/waraqmd/",
+  "bugs": "https://github.com/alidaram99/waraqmd/issues",
+  "keywords": [
+    "markdown",
+    "markdown-editor",
+    "markdown-reader",
+    "pwa",
+    "offline",
+    "mermaid",
+    "katex",
+    "rtl",
+    "arabic",
+    "file-handler",
+    "default-app"
+  ],
+  "dependencies": {
+    "highlight.js": "^11.10.0",
+    "js-yaml": "^4.1.0",
+    "katex": "^0.16.11",
+    "markdown-it": "^14.1.0",
+    "markdown-it-anchor": "^9.2.0",
+    "markdown-it-task-lists": "^2.1.1",
+    "markdown-it-texmath": "^1.0.0",
+    "mermaid": "^11.4.1"
+  },
+  "devDependencies": {
+    "esbuild": "^0.28.2",
+    "playwright-core": "^1.48.0"
+  }
+}

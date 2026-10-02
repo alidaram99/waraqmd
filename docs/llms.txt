@@ -1,0 +1,10 @@
+# Waraq
+
+> Waraq (ورق) is a free, open-source, offline-first Markdown reader and editor PWA. It can be installed as the default app for opening .md/.markdown/.mdx/.txt/.json/.yaml/.log files on Windows, Android and ChromeOS. It renders Mermaid diagrams, KaTeX math, GitHub-flavored tables and task lists, and gives every paragraph, heading, list item and table cell automatic Arabic/English (RTL/LTR) direction via the browser's native Unicode bidi algorithm. Files are read and saved locally; nothing is uploaded.
+
+- [Open the app](https://alidaram99.github.io/waraqmd/app/): installable PWA, works offline after first visit.
+- [Project and source](https://github.com/alidaram99/waraqmd): MIT license, GitHub release v0.1.0.
+- [Research](https://github.com/alidaram99/waraqmd/blob/main/RESEARCH.md): competitor comparison (Typora, Obsidian, MarkText, Zettlr, iA Writer, StackEdit, Dillinger, HackMD, VS Code, GitHub mobile, Markor) and why each falls short for agent output, Arabic/RTL text, phones, or being an OS default.
+- [Set as default guide](https://alidaram99.github.io/waraqmd/#default): step-by-step for Windows, Android, ChromeOS; honest limitation notice for Safari/iOS and Firefox (no File Handling API support in those engines).
+
+Known limits, stated plainly: the File Handling API (real OS "Open with" / default-app registration) only works in Chromium-based browsers (Chrome, Edge) on Windows, ChromeOS, and Android (as an installed WebAPK) — not Safari/iOS or Firefox. Mermaid diagram labels in Arabic script may not shape correctly (a Mermaid limitation). Version 0.1.0 is free with no paid tier yet; see RESEARCH.md for what a later paid tier might look like (publish/share links, sync, themes, bring-your-own-key AI summarize).
