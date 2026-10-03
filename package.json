@@ -1,6 +1,6 @@
 {
   "name": "waraqmd",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "description": "Waraq — an offline-first, installable Markdown reader and editor PWA for agent output and everyday notes, with automatic per-paragraph Arabic/English (RTL/LTR) text direction, Mermaid, KaTeX math, and GitHub-flavored tables and task lists.",
   "type": "module",
@@ -33,6 +33,7 @@
     "default-app"
   ],
   "dependencies": {
+    "dompurify": "^3.4.16",
     "highlight.js": "^11.10.0",
     "js-yaml": "^4.1.0",
     "katex": "^0.16.11",
@@ -44,6 +45,7 @@
   },
   "devDependencies": {
     "esbuild": "^0.28.2",
+    "jsdom": "^25.0.1",
     "playwright-core": "^1.48.0"
   }
 }

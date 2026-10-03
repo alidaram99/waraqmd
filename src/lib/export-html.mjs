@@ -23,6 +23,13 @@ export function buildStandaloneHtml({ title, bodyHtml, css, lang = 'en' }) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- S6 fix: this file has no legitimate script, so script is fully disallowed,
+     not merely restricted to same-origin (there is no origin for a saved
+     local file to be "same" as). object-src/base-uri closed for the same
+     reason Waraq's own app page closes them. style-src keeps 'unsafe-inline'
+     only because the inlined CSS below reproduces KaTeX/Mermaid's own
+     per-element inline style="..." output, exactly as in the live app. -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'none'; style-src 'unsafe-inline'; img-src data:; object-src 'none'; base-uri 'none'; form-action 'none'">
 <title>${safeTitle}</title>
 <style>${css}</style>
 </head>

@@ -16,12 +16,33 @@ const SHELL_CACHE = `waraq-shell-${CACHE_VERSION}`;
 const SHARE_CACHE = 'waraq-share-target';
 const SHARE_TARGET_PATH = '/waraqmd/app/share-target/';
 
-// Filled in by scripts/build.mjs with the real asset list for this build.
-const PRECACHE_URLS = /* __PRECACHE_URLS__ */ [];
+// Filled in by scripts/build.mjs — see its writeServiceWorker() doc comment
+// for why these are two separate lists rather than one.
+const CRITICAL_PRECACHE_URLS = /* __CRITICAL_PRECACHE_URLS__ */ [];
+const BACKGROUND_PRECACHE_URLS = /* __BACKGROUND_PRECACHE_URLS__ */ [];
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
-    caches.open(SHELL_CACHE).then((cache) => cache.addAll(PRECACHE_URLS)).then(() => self.skipWaiting()),
+    caches
+      .open(SHELL_CACHE)
+      .then((cache) => cache.addAll(CRITICAL_PRECACHE_URLS))
+      .then(() => self.skipWaiting())
+      .then(() =>
+        // Best-effort, not blocking: each file is cached independently so
+        // one failed fetch (or a slow connection on first install) can
+        // never fail the install the way a missing critical file should.
+        // This runs inside the same event.waitUntil(), so the browser
+        // won't recycle the service worker mid-way through it.
+        caches.open(SHELL_CACHE).then((cache) =>
+          Promise.allSettled(
+            BACKGROUND_PRECACHE_URLS.map((url) =>
+              fetch(url).then((response) => {
+                if (response.ok) return cache.put(url, response);
+              }),
+            ),
+          ),
+        ),
+      ),
   );
 });
 
@@ -44,14 +65,14 @@ self.addEventListener('fetch', (event) => {
 
   if (event.request.method !== 'GET' || url.origin !== self.location.origin) return;
 
-  // Cache-first for anything already cached. Anything else — notably the
-  // on-demand Mermaid diagram-type chunks (mermaid lazy-loads a different
-  // module per diagram type; see getMermaid() in app.js), which are
-  // deliberately *not* in PRECACHE_URLS so a plain-text document never pays
-  // for downloading them — is fetched from the network once and then saved
-  // into the same shell cache, so the *second* time a given chunk is needed
-  // (online or off) it is already local. A failed navigation falls back to
-  // the cached app shell so a deep link still opens with no network at all.
+  // Cache-first for anything already cached (which, after install finishes,
+  // is effectively everything — see BACKGROUND_PRECACHE_URLS above). This
+  // runtime-caching fallback mainly covers the rare case of a request
+  // during the brief window between a page load and install's background
+  // precache completing: fetched from the network once and saved into the
+  // same shell cache, so the *next* time it's local either way. A failed
+  // navigation falls back to the cached app shell so a deep link still
+  // opens with no network at all.
   event.respondWith(
     caches.match(event.request).then((cached) => {
       if (cached) return cached;
@@ -59,7 +80,19 @@ self.addEventListener('fetch', (event) => {
         .then((response) => {
           if (response.ok && url.pathname.startsWith('/waraqmd/app/')) {
             const copy = response.clone();
-            caches.open(SHELL_CACHE).then((cache) => cache.put(event.request, copy));
+            // event.waitUntil, not a bare un-awaited promise: without this,
+            // the service worker is free to be torn down the instant the
+            // response above is handed back to the page (event.respondWith
+            // only waits for the RESPONSE, not for side effects after it),
+            // which was silently dropping this cache write under real
+            // concurrent load — found by an offline regression check (open
+            // a file right after a fresh reload while offline): several of
+            // esbuild's split chunks that app.js needs synchronously, not
+            // only Mermaid's lazy ones, were fetched during the online
+            // visit but never actually finished being cached, so the next
+            // offline load got net::ERR_FAILED on them and the whole
+            // preview silently rendered nothing.
+            event.waitUntil(caches.open(SHELL_CACHE).then((cache) => cache.put(event.request, copy)));
           }
           return response;
         })

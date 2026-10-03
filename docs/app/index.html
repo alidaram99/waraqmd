@@ -3,6 +3,24 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<!--
+  S6 fix: this app renders files from any source (downloads, phone shares,
+  another agent's output) as HTML/SVG, so a defense-in-depth CSP matters
+  even though markdown-render.mjs already escapes raw HTML and app.js now
+  sanitizes Mermaid's SVG with DOMPurify (src/lib/sanitize-svg.mjs) before
+  it touches innerHTML. script-src has NO 'unsafe-inline': the app has zero
+  inline <script> and zero inline event-handler attributes (the one that
+  existed, the welcome screen's onclick, was moved to an addEventListener
+  in app.js for exactly this reason). style-src keeps 'unsafe-inline'
+  deliberately — KaTeX and Mermaid both position output almost entirely via
+  inline style="..." attributes generated per-render, so precomputed hashes
+  are not practical; this is a documented, narrower trade-off (CSS alone
+  cannot execute script) rather than a blanket exception. See
+  docs/app/../../SECURITY.md and the S6 Resolution note in
+  docs/reviews/four-products-security-review.md (main monorepo) for the
+  full reasoning.
+-->
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <title>Waraq — Markdown reader &amp; editor</title>
 <meta name="description" content="Open, edit and save Markdown files offline. Mermaid, math, tables, task lists, automatic Arabic/English direction.">
 <link rel="manifest" href="./manifest.webmanifest">
@@ -59,10 +77,10 @@
 
 <div id="waraq-welcome" class="waraq-welcome hidden">
   <p data-i18n="dropHint">Drop a Markdown file here, or paste text</p>
-  <button id="waraq-welcome-open" data-i18n="openFile" onclick="document.getElementById('waraq-btn-open').click()">Open file</button>
+  <button id="waraq-welcome-open" data-i18n="openFile">Open file</button>
 </div>
 
-<input type="file" id="waraq-file-input" class="hidden" style="display:none">
+<input type="file" id="waraq-file-input" class="hidden">
 
 <script type="module" src="./assets/app.js"></script>
 </body>

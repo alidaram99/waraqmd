@@ -64,14 +64,25 @@ this app is meant to become the default opener for files from any source
 not a trust signal. See [`src/lib/markdown-render.mjs`](./src/lib/markdown-render.mjs)
 for the exact rule and its test coverage.
 
+As of v0.1.1, Mermaid's rendered SVG is **independently sanitized with
+DOMPurify** before it touches `innerHTML` — not trusting Mermaid's own
+`securityLevel: 'strict'` alone — and the app ships a **Content-Security-
+Policy** (`script-src 'self'`, no `'unsafe-inline'`; `object-src`/`base-uri
+'none'`); exported standalone HTML gets its own CSP with `script-src
+'none'`. This closes security review finding S6; see
+[SECURITY.md](./SECURITY.md) and [VERIFY.md](./VERIFY.md) for the fix and
+its regression tests (including a live-browser run against real malicious
+Mermaid/Markdown payloads).
+
 ## Development
 
 ```sh
 npm install
-npm test            # 45 unit tests, pure logic only — no browser required
+npm test            # 55 unit tests, pure logic only — no browser required
 npm run build        # generates docs/app/{assets,manifest.webmanifest,sw.js}
 npm run icons         # regenerates docs/app/icons/*.png (needs Python + Pillow)
-node scripts/verify-render.mjs   # drives a real browser (system Edge/Chrome) against the build
+node scripts/verify-render.mjs   # drives a real browser against the build: Arabic/Mermaid/KaTeX
+node scripts/verify-xss.mjs       # same, but with malicious Markdown/Mermaid payloads (security review S6)
 ```
 
 `docs/app/assets/`, `manifest.webmanifest` and `sw.js` are build output

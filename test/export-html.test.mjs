@@ -26,3 +26,13 @@ test('defaults to a safe title and English lang when omitted', () => {
   assert.ok(out.includes('<title>Untitled</title>'));
   assert.ok(out.includes('<html lang="en">'));
 });
+
+test('S6 fix: exported HTML carries a CSP that fully disallows script', () => {
+  const out = buildStandaloneHtml({ title: 't', bodyHtml: '<p>hi</p>', css: '' });
+  const match = out.match(/<meta http-equiv="Content-Security-Policy" content="([^"]+)">/);
+  assert.ok(match, 'no CSP meta tag found in exported HTML');
+  const csp = match[1];
+  assert.ok(/script-src 'none'/.test(csp), csp);
+  assert.ok(/object-src 'none'/.test(csp), csp);
+  assert.ok(/base-uri 'none'/.test(csp), csp);
+});

@@ -16,7 +16,27 @@ app or export a file.
   a phone share, another agent's output — and a `.md` extension is not by
   itself a reason to trust a file's contents.
 - **Mermaid diagrams run with `securityLevel: 'strict'`**, which disables
-  Mermaid's own HTML-in-labels and click-interaction features.
+  Mermaid's own HTML-in-labels and click-interaction features — and, as of
+  v0.1.1, the resulting SVG string is **independently sanitized with
+  DOMPurify** (`src/lib/sanitize-svg.mjs`, SVG profile, `foreignObject` /
+  `script` / `iframe` / `object` / `embed` explicitly forbidden) before it
+  is ever assigned to `innerHTML`, rather than trusting Mermaid's own
+  sanitizer alone. This was security review finding S6 — see
+  `docs/reviews/four-products-security-review.md`'s Resolution note in the
+  main monorepo for the full writeup, and `test/sanitize-svg.test.mjs` /
+  `scripts/verify-xss.mjs` for the regression tests (9 unit tests with real
+  attack payloads, plus a live-browser run against a malicious Markdown
+  fixture that also confirms the legitimate diagram still renders).
+- **The app page ships a Content-Security-Policy** (`docs/app/index.html`):
+  `script-src 'self'` with no `'unsafe-inline'` exception (the app has zero
+  inline scripts and zero inline event-handler attributes), `object-src
+  'none'`, `base-uri 'none'`. `style-src` keeps `'unsafe-inline'`
+  deliberately — KaTeX and Mermaid both position output almost entirely via
+  generated-per-render inline `style="..."` attributes, so precomputed
+  hashes are not practical there; this is a narrower, documented trade-off
+  (CSS alone cannot execute script) rather than a blanket exception.
+  Exported standalone HTML (`src/lib/export-html.mjs`) ships its own CSP
+  with `script-src 'none'` — a saved file has no legitimate script at all.
 - **No outbound network requests are made to render or save a file.** The
   only network activity after the first load is the browser fetching its
   own cached app assets (service worker) and, once built, the first-use

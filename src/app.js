@@ -8,6 +8,15 @@ import { chunkSections } from './lib/chunk.mjs';
 import { isSupportedFile, isMarkdownFile, acceptAttribute } from './lib/filetypes.mjs';
 import { t, detectLang } from './lib/i18n.mjs';
 import { buildStandaloneHtml } from './lib/export-html.mjs';
+import { createSvgSanitizer } from './lib/sanitize-svg.mjs';
+
+// Security review finding S6: Mermaid's own `securityLevel: 'strict'` (see
+// getMermaid() below) is Mermaid's protection, not ours. This is a second,
+// independent sanitization pass on the SVG string Mermaid hands back,
+// before it is ever assigned to innerHTML — see sanitize-svg.mjs's doc
+// comment for why foreignObject/script/event-handlers/javascript: URIs are
+// stripped even though Mermaid should already refuse to emit them.
+const svgSanitizer = createSvgSanitizer(window);
 
 // Mermaid is ~4MB unminified and most agent-produced Markdown has no
 // diagrams in it at all, so it is loaded on first actual use rather than
@@ -39,6 +48,7 @@ const dom = {
   sidebar: el('waraq-sidebar'),
   tocList: el('waraq-toc'),
   welcome: el('waraq-welcome'),
+  welcomeOpen: el('waraq-welcome-open'),
   recentList: el('waraq-recent-list'),
   dropOverlay: el('waraq-drop-overlay'),
   filename: el('waraq-filename'),
@@ -163,7 +173,7 @@ async function mountMermaid(root) {
       const { svg } = await mermaid.render(id, source);
       const wrap = document.createElement('div');
       wrap.className = 'waraq-mermaid-rendered';
-      wrap.innerHTML = svg;
+      wrap.innerHTML = svgSanitizer.sanitize(svg);
       node.replaceWith(wrap);
     } catch (err) {
       const pre = document.createElement('pre');
@@ -344,6 +354,11 @@ async function openPlainFile(file) {
   const text = await file.text();
   setDocument({ text, name: file.name, handle: null, readOnly: true });
 }
+
+// The welcome screen's own button just forwards to the real Open button —
+// wired here (not an inline onclick="...") so the app's CSP can set
+// script-src 'self' with no 'unsafe-inline' exception.
+dom.welcomeOpen.addEventListener('click', () => dom.btnOpen.click());
 
 dom.btnOpen.addEventListener('click', async () => {
   if (window.showOpenFilePicker) {

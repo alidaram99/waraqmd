@@ -104,14 +104,29 @@ function writeManifest() {
 }
 
 function writeServiceWorker() {
-  // Precache only what every first visit needs (the entry bundle, styles,
-  // KaTeX, icons, the shell page). Mermaid's ~100 per-diagram-type chunks
-  // (see getMermaid() in app.js) are deliberately left out — they are
-  // fetched and cached at runtime (see the fetch handler above) the first
-  // time a document actually uses one, so a plain-text document never pays
-  // to download diagram renderers it will never run.
+  // Two precache tiers, not one:
+  //
+  // - CRITICAL: the entry bundle, styles, KaTeX, icons, the shell page —
+  //   fetched with cache.addAll() during 'install', which is all-or-nothing
+  //   on purpose: if any of these fail, the app genuinely cannot run
+  //   offline, so install should fail loudly rather than pretend to
+  //   succeed.
+  // - BACKGROUND: every other built chunk — in practice almost entirely
+  //   Mermaid's own internal per-diagram-type modules (mermaid.initialize()
+  //   pulls in shared registry/detector code plus the renderer for
+  //   whichever diagram types a document actually used; which chunk that
+  //   is varies by diagram type and is not fully knowable from app.js's own
+  //   static imports). A first design here cached these opportunistically
+  //   only when the running page happened to fetch one, which a real
+  //   offline regression check caught as broken: open a flowchart online,
+  //   go offline, reopen the *same* file — a shared-but-not-yet-triggered
+  //   Mermaid internal chunk could still be missing, and the entire preview
+  //   silently rendered nothing. Precaching the full chunk set up front
+  //   removes that gap; cache.add() runs individually with its own
+  //   try/catch per file (not cache.addAll()) so one flaky chunk can't fail
+  //   the whole install the way a missing critical file should.
   const fontFiles = readdirSync(path.join(ASSETS, 'fonts'));
-  const precache = [
+  const criticalPrecache = [
     './',
     './index.html',
     './manifest.webmanifest',
@@ -123,10 +138,16 @@ function writeServiceWorker() {
     './icons/icon-512.png',
     './icons/maskable-512.png',
   ];
+  const allJsFiles = readdirSync(ASSETS, { withFileTypes: true })
+    .filter((e) => e.isFile() && e.name.endsWith('.js'))
+    .map((e) => e.name);
+  const backgroundPrecache = allJsFiles.filter((f) => f !== 'app.js').map((f) => `./assets/${f}`);
+
   let sw = readFileSync(path.join(SRC, 'sw-source.js'), 'utf8');
   const version = `${pkg.version}-${gitShortSha()}`;
   sw = sw.replace('__CACHE_VERSION__', version);
-  sw = sw.replace('/* __PRECACHE_URLS__ */ []', JSON.stringify(precache));
+  sw = sw.replace('/* __CRITICAL_PRECACHE_URLS__ */ []', JSON.stringify(criticalPrecache));
+  sw = sw.replace('/* __BACKGROUND_PRECACHE_URLS__ */ []', JSON.stringify(backgroundPrecache));
   writeFileSync(path.join(APP_DIR, 'sw.js'), sw);
 }
 
