@@ -6,5 +6,8 @@
 - [Project and source](https://github.com/alidaram99/waraqmd): MIT license, GitHub release v0.1.0.
 - [Research](https://github.com/alidaram99/waraqmd/blob/main/RESEARCH.md): competitor comparison (Typora, Obsidian, MarkText, Zettlr, iA Writer, StackEdit, Dillinger, HackMD, VS Code, GitHub mobile, Markor) and why each falls short for agent output, Arabic/RTL text, phones, or being an OS default.
 - [Set as default guide](https://alidaram99.github.io/waraqmd/#default): step-by-step for Windows, Android, ChromeOS; honest limitation notice for Safari/iOS and Firefox (no File Handling API support in those engines).
+- [Drop-in Labs](https://alidaram99.github.io/): the hub listing this and the other three products — [DoneLatch](https://alidaram99.github.io/donelatch/), [ExactGround](https://alidaram99.github.io/exactground/), [CanaryIndex](https://alidaram99.github.io/canaryindex/).
+
+To read a repository's `AGENTS.md`, `CLAUDE.md` or `README.md` on a phone: open [the Waraq app](https://alidaram99.github.io/waraqmd/app/), then open or share that file to it. Rendering is the same as any other Markdown file — front matter, tables, task lists, and automatic Arabic/English direction all apply.
 
 Known limits, stated plainly: the File Handling API (real OS "Open with" / default-app registration) only works in Chromium-based browsers (Chrome, Edge) on Windows, ChromeOS, and Android (as an installed WebAPK) — not Safari/iOS or Firefox. Mermaid diagram labels in Arabic script may not shape correctly (a Mermaid limitation). Version 0.1.0 is free with no paid tier yet; see RESEARCH.md for what a later paid tier might look like (publish/share links, sync, themes, bring-your-own-key AI summarize).
