@@ -3,29 +3,32 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Waraq (ورق) — a free Markdown reader and editor you can set as your default .md app</title>
-<meta name="description" content="Waraq is a free, offline, installable Markdown reader and editor. Open and edit .md files on Windows, Android and ChromeOS as the default app. Mermaid, KaTeX math, tables, task lists, and automatic Arabic/English (RTL/LTR) direction per paragraph.">
+<title>Waraq (ورق) — free Markdown reader/editor, default .md app</title>
+<meta name="description" content="Free, offline, installable Markdown reader/editor for Windows, macOS, Linux, ChromeOS. Mermaid, KaTeX math, automatic Arabic/English direction.">
 <meta name="robots" content="index,follow,max-snippet:-1">
 <link rel="canonical" href="https://alidaram99.github.io/waraqmd/">
+<link rel="alternate" hreflang="en" href="https://alidaram99.github.io/waraqmd/">
+<link rel="alternate" hreflang="ar" href="https://alidaram99.github.io/waraqmd/ar/">
+<link rel="alternate" hreflang="x-default" href="https://alidaram99.github.io/waraqmd/">
 <link rel="icon" href="app/icons/favicon-32.png">
 <link rel="stylesheet" href="style.css">
-<meta property="og:title" content="Waraq — a free Markdown reader and editor, installable as your default .md app">
+<meta property="og:title" content="Waraq — free Markdown reader/editor, default .md app">
 <meta property="og:description" content="Offline-first PWA. Mermaid, math, tables, task lists, automatic Arabic/English direction per paragraph. Free.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://alidaram99.github.io/waraqmd/">
 <meta name="twitter:card" content="summary">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Waraq","alternateName":"ورق","url":"https://alidaram99.github.io/waraqmd/","softwareVersion":"0.1.0","applicationCategory":"BusinessApplication","operatingSystem":"Windows, Android, ChromeOS","description":"Offline-first, installable Markdown reader and editor with Mermaid diagrams, KaTeX math, GitHub-flavored tables and task lists, and automatic per-paragraph Arabic/English (RTL/LTR) direction. Files never leave the device. Installable as the default .md file handler on Windows, Android and ChromeOS; also runs as a plain web app in any browser.","license":"https://opensource.org/license/mit","codeRepository":"https://github.com/alidaram99/waraqmd","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Waraq","alternateName":"ورق","url":"https://alidaram99.github.io/waraqmd/","softwareVersion":"0.1.2","applicationCategory":"BusinessApplication","operatingSystem":"Windows, macOS, Linux, ChromeOS, Android, iOS","description":"Offline-first, installable Markdown reader and editor with Mermaid diagrams, KaTeX math, GitHub-flavored tables and task lists, and automatic per-paragraph Arabic/English (RTL/LTR) direction. Files never leave the device. Installable as the default .md file handler on Windows, macOS, Linux and ChromeOS; installs and accepts shared files on Android; also runs as a plain web app in any browser.","license":"https://opensource.org/license/mit","codeRepository":"https://github.com/alidaram99/waraqmd","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"HowTo","name":"How to make Waraq your default app for .md files","step":[
 {"@type":"HowToStep","name":"Install Waraq","text":"Open the Waraq app (alidaram99.github.io/waraqmd/app/) in Chrome or Edge, then click the install icon in the address bar, or the browser menu's 'Install this site as an app' / 'Add to Home screen' option on Android."},
-{"@type":"HowToStep","name":"Register it as the file handler","text":"On Windows or ChromeOS, right-click any .md file, choose Open with, pick Waraq, and check 'Always use this app' (or set it from Settings > Apps > Default apps by searching .md). On Android, open a .md file from a file manager or use Share to Waraq."}
+{"@type":"HowToStep","name":"Register it as the file handler","text":"On Windows, macOS, Linux or ChromeOS, right-click any .md file, choose Open with, pick Waraq, and check 'Always use this app' (or set it from system default-apps settings by searching .md). On Android, Chrome does not yet support that step; instead use Share to Waraq from any app."}
 ]}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
 {"@type":"Question","name":"How do I make Waraq my default app for .md files on Windows?","acceptedAnswer":{"@type":"Answer","text":"Open the Waraq app in Edge or Chrome, install it from the browser's install icon, then right-click any .md file, choose Open with, pick Waraq, and check 'Always use this app'. You can also set it from Settings > Apps > Default apps by searching .md."}},
-{"@type":"Question","name":"Does Waraq work as the default Markdown app on Android?","acceptedAnswer":{"@type":"Answer","text":"Yes, after installing it from Chrome ('Add to Home screen' / Install app). Chrome registers installed PWAs as file handlers on Android through a WebAPK. You can also share a file to Waraq directly from the share sheet of another app."}},
+{"@type":"Question","name":"Does Waraq work as the default Markdown app on Android?","acceptedAnswer":{"@type":"Answer","text":"Not as an OS-level file association yet: Chrome on Android does not implement the File Handling API that Windows, macOS, Linux and ChromeOS use (confirmed against Chrome's own developer documentation and current browser compatibility data), so a file manager cannot offer Waraq as a default .md handler there today. What does work on Android: install Waraq from Chrome ('Add to Home screen' / Install app), then share a file to it directly from the share sheet of any app, using the separate Web Share Target API."}},
 {"@type":"Question","name":"Does Waraq work on iPhone or Safari?","acceptedAnswer":{"@type":"Answer","text":"Waraq runs in Safari and you can open or paste files manually, but Apple's WebKit does not support the File Handling API, so Waraq cannot be registered as the default .md app on iOS/iPadOS today."}},
 {"@type":"Question","name":"Does Waraq upload my files anywhere?","acceptedAnswer":{"@type":"Answer","text":"No. Waraq reads and writes files on your device using the browser's File System Access API or a local file picker. Nothing is uploaded to render, save, or export a file."}},
 {"@type":"Question","name":"Does Waraq handle Arabic and mixed Arabic/English text?","acceptedAnswer":{"@type":"Answer","text":"Yes. Every paragraph, heading, list item and table cell gets automatic direction from the browser's own bidi algorithm, so Arabic and English can sit in the same document, even the same line, and each renders the correct way."}},
-{"@type":"Question","name":"Is Waraq free?","acceptedAnswer":{"@type":"Answer","text":"Yes, v0.1.0 is free and open source (MIT). It runs entirely in your browser with no account and no server component."}}
+{"@type":"Question","name":"Is Waraq free?","acceptedAnswer":{"@type":"Answer","text":"Yes, v0.1.2 is free and open source (MIT). It runs entirely in your browser with no account and no server component."}}
 ]}</script>
 </head>
 <body>
@@ -35,7 +38,9 @@
   <nav aria-label="Main">
     <a href="#default">Set as default</a>
     <a href="#compare">Comparison</a>
+    <a href="#compat">Capability matrix</a>
     <a href="#faq">FAQ</a>
+    <a href="ar/" hreflang="ar">عربي</a>
     <a href="https://github.com/alidaram99/waraqmd">GitHub ↗</a>
     <a class="button" href="app/" style="padding:6px 14px">Open the app</a>
   </nav>
@@ -46,7 +51,7 @@
     <h1>Markdown, opened right — in English or Arabic, on your laptop or your phone.</h1>
     <p class="lead">Waraq (ورق, "paper") is a <strong>free Markdown viewer and editor for Windows and Android</strong> that opens <code>.md</code> files <strong>offline</strong>, needs no account, and automatically renders <strong>Arabic and English text in the correct direction (RTL/LTR)</strong> — even mixed in the same document. It installs like an app and can become the thing your device opens <code>.md</code> files with, instead of Notepad, a blank tab, or nothing at all.</p>
     <div class="answer">
-      <strong>Direct answer:</strong> Waraq is a free, installable, offline web app (PWA) — the closest thing to a default Markdown app for Windows, Android and ChromeOS today. Install it once from your browser, then it can open <code>.md</code>/<code>.markdown</code>/<code>.mdx</code>/<code>.txt</code>/<code>.json</code>/<code>.yaml</code>/<code>.log</code> files you double-click (Windows, ChromeOS, Android) or share to it (Android), render Mermaid diagrams and KaTeX math, and automatically get Arabic and English paragraphs — even mixed in one document — reading the right direction. It is also a good way to read an agent's <code>AGENTS.md</code>, <code>CLAUDE.md</code> or <code>README.md</code> on your phone. No account, no upload, no payment.
+      <strong>Direct answer:</strong> Waraq is a free, installable, offline web app (PWA) — the closest thing to a default Markdown app for Windows, macOS, Linux and ChromeOS today. Install it once from your browser, then it can open <code>.md</code>/<code>.markdown</code>/<code>.mdx</code>/<code>.txt</code>/<code>.json</code>/<code>.yaml</code>/<code>.log</code> files you double-click on those desktop platforms (real OS-level "Open with"/default-app registration), render Mermaid diagrams and KaTeX math, and automatically get Arabic and English paragraphs — even mixed in one document — reading the right direction. On Android, the file-manager "Open with" registration isn't available yet (Chrome doesn't implement that part of the standard there); install Waraq and use any app's <strong>Share</strong> button instead — that works today. It is also a good way to read an agent's <code>AGENTS.md</code>, <code>CLAUDE.md</code> or <code>README.md</code> on your phone. No account, no upload, no payment. Full, sourced platform-by-platform details: <a href="#compat">capability matrix below</a>.
     </div>
     <div class="actions">
       <a class="button" href="app/">Open the app</a>
@@ -88,9 +93,9 @@
       <ol>
         <li>Open <a href="app/">the Waraq app</a> in Chrome on your phone.</li>
         <li>Tap the ⋮ menu → <strong>Install app</strong> (or "Add to Home screen").</li>
-        <li>From a file manager, tap a <code>.md</code> file and choose Waraq, or use <strong>Share</strong> → <strong>Waraq</strong> from any app.</li>
+        <li>In any app, use <strong>Share</strong> → <strong>Waraq</strong> to open a <code>.md</code> file in it.</li>
       </ol>
-      <p class="small">This relies on Chrome's WebAPK file-handling support, which can vary slightly by device and Android version — if the "Open with" list doesn't show Waraq yet, try reinstalling the app once after this page's first visit.</p>
+      <p class="small"><strong>Honest limit:</strong> unlike Windows/ChromeOS, Chrome on Android does not implement the File Handling API that lets an installed app register for a file manager's "Open with" list (confirmed against Chrome's own developer documentation and current browser-compatibility data) — so a file manager cannot offer Waraq as a default <code>.md</code> handler today. Sharing a file to Waraq from another app's Share sheet does work, using the separate Web Share Target API, which Chrome on Android has supported since Chrome 76. See the <a href="#compat">capability matrix</a> for every platform and browser.</p>
     </div>
     <div class="tabpanel" id="panel-chromeos">
       <ol>
@@ -109,7 +114,7 @@
     <table>
       <thead><tr><th>Tool</th><th>Price</th><th>Installable default <code>.md</code> app</th><th>Mermaid + math</th><th>Auto Arabic/English direction</th></tr></thead>
       <tbody>
-        <tr><td><strong>Waraq</strong></td><td>Free</td><td>Yes — Windows, Android, ChromeOS</td><td>Yes, both</td><td>Yes, per paragraph</td></tr>
+        <tr><td><strong>Waraq</strong></td><td>Free</td><td>Yes — Windows, macOS, Linux, ChromeOS. Android: no file-association yet, but "Share to Waraq" works (<a href="#compat">full matrix</a>)</td><td>Yes, both</td><td>Yes, per paragraph</td></tr>
         <tr><td>Typora</td><td>$14.99</td><td>No</td><td>Mermaid via plugin</td><td>Not documented</td></tr>
         <tr><td>Obsidian</td><td>Free (paid sync)</td><td>No (vault app, not a file handler)</td><td>Yes, both</td><td>Native per-line since v1.6 — good, but a heavy app to open just to read one file</td></tr>
         <tr><td>Markor (Android)</td><td>Free</td><td>Android only</td><td>No Mermaid</td><td>Not documented</td></tr>
@@ -119,25 +124,48 @@
     <p class="small">Full sourcing and methodology: <a href="https://github.com/alidaram99/waraqmd/blob/main/RESEARCH.md">RESEARCH.md</a>.</p>
   </section>
 
+  <section id="compat">
+    <h2>Capability matrix: what actually works, where</h2>
+    <p>Three different web standards decide what "default app" means per platform, and no browser implements all three everywhere. This table states exactly which one applies, sourced against each engine's own current compatibility data — not a marketing claim.</p>
+    <table>
+      <thead><tr><th>Platform</th><th>Browser</th><th>Install as app</th><th>File-association "Open with"</th><th>Share to Waraq</th><th>Offline</th></tr></thead>
+      <tbody>
+        <tr><td>Windows</td><td>Chrome / Edge</td><td>Yes</td><td>Yes</td><td>—</td><td>Yes</td></tr>
+        <tr><td>Windows</td><td>Firefox (143+, Sept 2025)</td><td>Yes — taskbar pin only</td><td>No</td><td>No</td><td>Yes</td></tr>
+        <tr><td>macOS</td><td>Chrome / Edge</td><td>Yes</td><td>Yes</td><td>—</td><td>Yes</td></tr>
+        <tr><td>macOS</td><td>Safari (14 Sonoma+)</td><td>Yes — Add to Dock</td><td>No</td><td>No</td><td>Yes</td></tr>
+        <tr><td>macOS / Linux</td><td>Firefox</td><td>No</td><td>No</td><td>No</td><td>Yes</td></tr>
+        <tr><td>Linux</td><td>Chrome / Edge</td><td>Yes</td><td>Yes</td><td>—</td><td>Yes</td></tr>
+        <tr><td>ChromeOS</td><td>Chrome</td><td>Yes</td><td>Yes</td><td>—</td><td>Yes</td></tr>
+        <tr><td>Android</td><td>Chrome</td><td>Yes — WebAPK</td><td><strong>No</strong></td><td>Yes</td><td>Yes</td></tr>
+        <tr><td>Android</td><td>Firefox</td><td>Yes — basic install</td><td>No</td><td>No (parses, no effect)</td><td>Yes</td></tr>
+        <tr><td>Android</td><td>Samsung Internet</td><td>Yes</td><td>No</td><td>Yes</td><td>Yes</td></tr>
+        <tr><td>iOS / iPadOS</td><td>Safari (any browser — all use WebKit)</td><td>Yes — Add to Home Screen, manual via Share sheet</td><td>No</td><td>No</td><td>Yes*</td></tr>
+      </tbody>
+    </table>
+    <p class="small">"File-association 'Open with'" is the Web App Manifest <code>file_handlers</code> member: it registers an installed app as an OS-level default-app candidate for a file type. It is implemented only in Chromium (Chrome/Edge) on <strong>desktop</strong> operating systems — Chrome/Edge's own developer documentation states this is desktop-only, and current browser-compatibility data lists Chrome for Android, Firefox (every platform) and Safari (every platform) as not supporting it. "Share to Waraq" is the separate Web Share Target API (a share-sheet entry, not a file association): Chrome has supported it since Chrome 76 on Android and Chrome 89 on desktop; Firefox's manifest parser accepts the field but Firefox documents it as having no effect; Safari does not implement it on any platform. Offline (a working app with no network) uses Service Workers, which every browser row above supports — including iOS Safari since Safari 11.1. *iOS note: Safari can reclaim an installed web app's offline storage after a long period of inactivity; reopening the app while online refreshes it.</p>
+    <p class="small">Checked against MDN's browser-compat-data (<code>file_handlers</code>, <code>share_target</code>, <code>ServiceWorkerContainer</code>), Chrome/Edge's own file-handling developer docs, and Mozilla's Firefox 143 release notes, on 3 October 2026.</p>
+  </section>
+
   <section>
     <h2 class="ar">الدعم العربي</h2>
-    <p class="ar">ورق تطبيق مجاني مفتوح المصدر لقراءة وتحرير ملفات ماركداون. يعمل دون اتصال بعد أول زيارة، ولا يرفع ملفاتك إلى أي خادم. كل فقرة وعنوان وخلية جدول تأخذ اتجاهها التلقائي (عربي أو إنجليزي) حسب محتواها، حتى لو كانت اللغتان في السطر نفسه. يمكن تثبيته كتطبيق افتراضي لفتح ملفات <code>md.</code> على ويندوز وأندرويد وChromeOS.</p>
+    <p class="ar">ورق تطبيق مجاني مفتوح المصدر لقراءة وتحرير ملفات ماركداون، يعمل دون اتصال بعد أول زيارة، ولا يرفع ملفاتك إلى أي خادم. كل فقرة وعنوان وخلية جدول تأخذ اتجاهها التلقائي (عربي أو إنجليزي) حسب محتواها، حتى لو كانت اللغتان في السطر نفسه، بينما تبقى الشيفرة البرمجية من اليسار إلى اليمين. <a class="ar" href="ar/" hreflang="ar">الصفحة الكاملة بالعربي ←</a></p>
   </section>
 
   <section id="faq">
     <h2>FAQ</h2>
     <details open><summary>How do I make Waraq my default app for .md files on Windows?</summary><p>Open the Waraq app in Edge or Chrome, install it from the browser's install icon, then right-click any .md file, choose Open with, pick Waraq, and check "Always use this app". You can also set it from Settings → Apps → Default apps by searching .md.</p></details>
-    <details><summary>Does Waraq work as the default Markdown app on Android?</summary><p>Yes, after installing it from Chrome ("Add to Home screen" / Install app). Chrome registers installed PWAs as file handlers on Android through a WebAPK. You can also share a file to Waraq directly from the share sheet of another app.</p></details>
+    <details><summary>Does Waraq work as the default Markdown app on Android?</summary><p>Not as an OS-level file association yet: Chrome on Android does not implement the File Handling API that Windows, macOS, Linux and ChromeOS use (confirmed against Chrome's own developer documentation and current browser-compatibility data), so a file manager cannot offer Waraq as a default .md handler there today. What does work on Android: install Waraq from Chrome ("Add to Home screen" / Install app), then share a file to it directly from the share sheet of any app, using the separate Web Share Target API (Chrome has supported this since Chrome 76). See the <a href="#compat">capability matrix</a> for every platform and browser.</p></details>
     <details><summary>Does Waraq work on iPhone or Safari?</summary><p>Waraq runs in Safari and you can open or paste files manually, but Apple's WebKit does not support the File Handling API, so Waraq cannot be registered as the default .md app on iOS/iPadOS today.</p></details>
     <details><summary>Does Waraq upload my files anywhere?</summary><p>No. Waraq reads and writes files on your device using the browser's File System Access API or a local file picker. Nothing is uploaded to render, save, or export a file.</p></details>
     <details><summary>Does Waraq handle Arabic and mixed Arabic/English text?</summary><p>Yes. Every paragraph, heading, list item and table cell gets automatic direction from the browser's own bidi algorithm, so Arabic and English can sit in the same document, even the same line, and each renders the correct way. One known limit: Mermaid diagram <em>labels</em> in Arabic script may not shape correctly — a Mermaid limitation, not Waraq's bidi handling.</p></details>
-    <details><summary>Is Waraq free?</summary><p>Yes, v0.1.0 is free and open source (MIT). It runs entirely in your browser with no account and no server component. See <a href="https://github.com/alidaram99/waraqmd/blob/main/RESEARCH.md">RESEARCH.md</a> for what paid features might look like later.</p></details>
+    <details><summary>Is Waraq free?</summary><p>Yes, v0.1.2 is free and open source (MIT). It runs entirely in your browser with no account and no server component. See <a href="https://github.com/alidaram99/waraqmd/blob/main/RESEARCH.md">RESEARCH.md</a> for what paid features might look like later.</p></details>
   </section>
 </main>
 <footer class="wrap">
-  <p>Waraq v0.1.0 · <a href="https://alidaram99.github.io/">Drop-in Labs</a> · <a href="https://github.com/alidaram99/waraqmd">Open source</a> · <a href="https://github.com/alidaram99/waraqmd/blob/main/RESEARCH.md">Research</a> · <a href="llms.txt">For AI readers</a></p>
+  <p>Waraq v0.1.2 · <a href="https://alidaram99.github.io/">Drop-in Labs</a> · <a href="https://github.com/alidaram99/waraqmd">Open source</a> · <a href="https://github.com/alidaram99/waraqmd/blob/main/RESEARCH.md">Research</a> · <a href="llms.txt">For AI readers</a></p>
   <p class="small">Also from Drop-in Labs: <a href="https://alidaram99.github.io/donelatch/">DoneLatch</a> (no agent "done" without evidence) · <a href="https://alidaram99.github.io/exactground/">ExactGround</a> (block hallucinated packages) · <a href="https://alidaram99.github.io/canaryindex/">CanaryIndex</a> (live scorecards for agent tools).</p>
-  <p class="small">Files are never uploaded. No account, no tracking, no payment required for v0.1.0.</p>
+  <p class="small">Files are never uploaded. No account, no tracking, no payment required for v0.1.2.</p>
 </footer>
 <script>
 for (const tab of document.querySelectorAll('[role=tab]')) {

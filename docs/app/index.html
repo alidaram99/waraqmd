@@ -23,6 +23,17 @@
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <title>Waraq — Markdown reader &amp; editor</title>
 <meta name="description" content="Open, edit and save Markdown files offline. Mermaid, math, tables, task lists, automatic Arabic/English direction.">
+<!--
+  SEO decision (round-10 technical SEO, documented in marketing/tech-seo-round1.md in the
+  main monorepo): this page is the app shell — a near-empty document until app.js runs, with
+  no unique server-rendered text for a crawler to index, and its value proposition is already
+  the home page's (/) job, which is content-rich, has FAQ/HowTo JSON-LD, and is the page meant
+  to rank. Indexing this one too would just compete with that page for the same queries. So:
+  noindex (don't rank this URL), follow (don't block crawling onward), with a self-canonical
+  kept anyway as hygiene in case this URL is ever reached with extra query parameters.
+-->
+<meta name="robots" content="noindex,follow">
+<link rel="canonical" href="https://alidaram99.github.io/waraqmd/app/">
 <link rel="manifest" href="./manifest.webmanifest">
 <link rel="icon" href="./icons/icon-192.png">
 <link rel="apple-touch-icon" href="./icons/icon-192.png">
